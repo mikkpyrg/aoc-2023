@@ -1,7 +1,9 @@
 public class Main {
     public static void main(String[] args) throws Exception {
-        Solver day1 = Solver.getSolver(1);
-        System.out.printf("Day 1: %s\n", day1.solve());
-        System.out.printf("Day 1B: %s\n", day1.solve2());
+        var currentlySolving = 2;
+
+        Solver day = Solver.getSolver(currentlySolving);
+        System.out.printf("Day %02d: %s\n", currentlySolving, day.solve());
+        System.out.printf("Day %02dB: %s\n", currentlySolving, day.solve2());
     }
 }
