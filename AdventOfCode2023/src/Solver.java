@@ -25,4 +25,5 @@ public abstract class Solver {
     }
 
     public abstract Object solve();
+    public abstract Object solve2();
 }
