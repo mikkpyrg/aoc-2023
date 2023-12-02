@@ -38,7 +38,30 @@ public class Day02 extends Solver {
     }
 
     @Override
+    // multiply the fewest colors in a game together (6 red * 2 green * 12 blue)
     public Object solve2() {
-        return null;
+        int sum = 0;
+        for (String line : getDataLines()) {
+            int red = 1;
+            int green = 1;
+            int blue = 1;
+            Matcher m = Pattern.compile("(\\d*) (green|red|blue)(,|;|$)")
+                    .matcher(line);
+            while(m.find())
+            {
+                int amount = Integer.parseInt(m.group(1));
+                String colour = m.group(2);
+                if (colour.equals("red") && amount > red)
+                {
+                    red = amount;
+                } else if (colour.equals("green") && amount > green) {
+                    green = amount;
+                } else if (colour.equals("blue") && amount > blue) {
+                    blue = amount;
+                }
+            }
+            sum += (green * red * blue);
+        }
+        return sum;
     }
 }
