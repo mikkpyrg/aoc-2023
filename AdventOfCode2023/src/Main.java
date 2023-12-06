@@ -1,6 +1,6 @@
 public class Main {
     public static void main(String[] args) throws Exception {
-        var currentlySolving = 4;
+        var currentlySolving = 5;
 
         Solver day = Solver.getSolver(currentlySolving);
         System.out.printf("Day %02d: %s\n", currentlySolving, day.solve());
