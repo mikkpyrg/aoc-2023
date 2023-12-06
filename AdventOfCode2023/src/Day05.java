@@ -159,7 +159,7 @@ public class Day05 extends Solver {
                             calculatedNumbers.add(new Long[] {newStart, range});
                             var waitingRangeLeft = (startMap - startNumber) + 1;
                             failedMapping.add(new Long[] {startNumber, waitingRangeLeft});
-                            // whole number range is inside map
+                            // whole map is in number range
                         } else {
                             calculatedNumbers.add(new Long[] {mapper[0], mapper[2]});
                             var waitingRangeRight = (endNumber - endMap) + 1;
