@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Day07 extends Solver {
     @Override
-    // every race lasts certain amount of time, more time you wait the faster you will be, got to beat records
+    // compare hand of cards and order them by rank, rank multiply by bet
     public Object solve() {
         var sum = 0;
         var hands = new ArrayList<CamelCardHand>();
@@ -34,7 +34,8 @@ public class Day07 extends Solver {
 
 
     @Override
-    // same as 1, only now every J can be any other card, to make the hand better, value is now lowest for it though
+    // same as 1, only now J can be any other card(to make hand better) and it's value is lowest.
+    // Going by current rule set, it means that J will be counted as the next most numerous card in hand
     public Object solve2() {
         var sum = 0;
         var hands = new ArrayList<CamelCardHand>();
