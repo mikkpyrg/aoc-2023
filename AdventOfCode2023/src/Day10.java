@@ -63,7 +63,7 @@ public class Day10 extends Solver {
     }
 
     @Override
-    // Calculate the number of spaces inside the loop, that are not part of the loop "enclosed spaces"
+    // Calculate the number of spaces inside the loop, that are not part of the loop, "enclosed spaces" or so
     // Should be simple, where I take a point and try to move towards one end of the map
     // like dragging a straight line from the point to the edge of the paper, if it hits 0 or % 2 lines, it's outside.
     // edge case when touching parallel edge
