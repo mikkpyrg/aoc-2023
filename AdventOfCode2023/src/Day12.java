@@ -97,6 +97,95 @@ public class Day12 extends Solver {
     //
     public Object solve2() {
         long sum = 0L;
+        for (String line : getDataLines()) {
+            var problemAndHint = line.split(" ");
+
+//            var problem = problemAndHint[0];
+//            var hintCounts = Arrays.stream(problemAndHint[1].split(","))
+//                    .filter(x -> !x.isEmpty())
+//                    .map(Integer::parseInt)
+//                    .toArray(Integer[]::new);
+
+            var problem = (problemAndHint[0] + "?").repeat(5);
+            problem = problem.substring(0, problem.length() - 1);
+            var hint = (problemAndHint[1] + ",").repeat(5);
+            hint = hint.substring(0, hint.length() - 1);
+            var hintCounts = Arrays.stream(hint.split(","))
+                    .filter(x -> !x.isEmpty())
+                    .map(Integer::parseInt)
+                    .toArray(Integer[]::new);
+
+//            sum += betterSolution(problem + '.', hintCounts, 0, 0, 0);
+
+            var cache = new Long[problem.length() + 1][hintCounts.length + 1];
+
+            for (int i = 0; i < cache.length; i++) {
+                for (int k = 0; k < cache[0].length; k++) {
+                    cache[i][k] = -1L;
+                }
+            }
+            sum += betterSolutionV2(problem, hintCounts, 0, 0, cache);
+        }
+
+        return sum;
+    }
+
+    private long betterSolution(String problem, Integer[] hints, int hintSizeDone, int problemIndex, int hintIndex) {
+        if (problem.length() <= problemIndex) {
+            return hints.length <= hintIndex && hintSizeDone == 0 ? 1 : 0;
+        }
+
+        var sum = 0L;
+        var path =  problem.charAt(problemIndex);
+
+        if (path == '.' || path == '?') {
+            if (hintSizeDone > 0) {
+                if (hintIndex < hints.length && hintSizeDone == hints[hintIndex]) {
+                    sum += betterSolution(problem, hints , 0, problemIndex + 1, hintIndex + 1);
+                }
+            } else {
+                sum += betterSolution(problem, hints, hintSizeDone, problemIndex + 1, hintIndex);
+            }
+        }
+        if (path == '#' || path == '?'){
+            sum += betterSolution(problem, hints, hintSizeDone + 1, problemIndex + 1, hintIndex);
+        }
+        return sum;
+    }
+
+    private long betterSolutionV2(String problem, Integer[] hints, int problemIndex, int hintIndex, Long[][] cache) {
+        if (problemIndex >= problem.length()) {
+            if (hintIndex < hints.length) {
+                return 0;
+            }
+            return 1;
+        }
+        if (cache[problemIndex][hintIndex] != -1) {
+            return cache[problemIndex][hintIndex];
+        }
+
+        var sum = 0L;
+        if (problem.charAt(problemIndex) == '.') {
+            sum = betterSolutionV2(problem, hints, problemIndex + 1, hintIndex, cache);
+        } else {
+            if (problem.charAt(problemIndex) == '?') {
+                sum += betterSolutionV2(problem, hints, problemIndex + 1, hintIndex, cache);
+            }
+            // look ahead and solve next sequence of hint
+            if (hintIndex < hints.length && problem.length() >= problemIndex + hints[hintIndex]) {
+                var newProblemIndex = problemIndex + hints[hintIndex];
+                if (!problem.substring(problemIndex, newProblemIndex).contains(".")
+                        && (newProblemIndex >= problem.length()  || problem.charAt(newProblemIndex) != '#')) {
+                    if (newProblemIndex >= problem.length()) {
+                        sum += betterSolutionV2(problem, hints, newProblemIndex, hintIndex + 1, cache);
+                    } else {
+                        sum += betterSolutionV2(problem, hints, newProblemIndex + 1, hintIndex + 1, cache);
+                    }
+                }
+            }
+        }
+
+        cache[problemIndex][hintIndex] = sum;
 
         return sum;
     }
