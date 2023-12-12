@@ -94,7 +94,7 @@ public class Day12 extends Solver {
     }
 
     @Override
-    //
+    // like 1 only sequence and hints are 5 times longer
     public Object solve2() {
         long sum = 0L;
         for (String line : getDataLines()) {
